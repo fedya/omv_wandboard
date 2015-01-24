@@ -119,6 +119,9 @@ extract_env () {
 	echo "unmount $flash_disk"
 	sudo umount /media/rootfs
 	sync
+	echo "Default name:password"
+	echo "root:root"
+	echo "omv:omv"
 	}
 
 clear_disk

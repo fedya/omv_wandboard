@@ -62,6 +62,10 @@ download_env () {
 	then
 	curl -L http://file-store.rosalinux.ru/download/0ab4eca78684e6e4bb984853a40e92cc2efbe8f2 -o ${kernel_version}.zImage
 	fi
+	if [ ! -fu-boot.imx ]
+	then
+	curl -L http://file-store.rosalinux.ru/download/2e99e48894a7d9707331c2e17e612de0c40f9f43 -o u-boot.imx
+	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
 	curl -L http://file-store.rosalinux.ru/download/971166023873486bc257ec994111dd317a58f9cf  -o ${kernel_version}-modules.tar.gz

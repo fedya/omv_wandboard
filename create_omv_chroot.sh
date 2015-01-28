@@ -55,14 +55,14 @@ download_env () {
 	echo "Prepare minimal system"
 	if [ ! -f omv_armvhl_minimal.tar.xz ]
 	then
-	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/b216e56a4f4492f700d85fa5748d8606138b9a2a -o omv_armvhl_minimal.tar.xz
+	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/057042837fd0f47220b04cae27e4cecdf96f6353 -o omv_armvhl_minimal.tar.xz
 	fi
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]
 	then
 	curl -L http://file-store.rosalinux.ru/download/0ab4eca78684e6e4bb984853a40e92cc2efbe8f2 -o ${kernel_version}.zImage
 	fi
-	if [ ! -fu-boot.imx ]
+	if [ ! -f u-boot.imx ]
 	then
 	curl -L http://file-store.rosalinux.ru/download/2e99e48894a7d9707331c2e17e612de0c40f9f43 -o u-boot.imx
 	fi
@@ -128,9 +128,9 @@ extract_env () {
 	echo "omv:omv"
 	}
 
+download_env
 clear_disk
 burn_uboot
 flash_partitions
 create_fs
-download_env
 extract_env

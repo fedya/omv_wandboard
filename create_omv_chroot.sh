@@ -13,7 +13,9 @@
 #        sed 's/device.uevent.*$/size/' | xargs grep -Hv '^0$' | cut -d / -f 4`
 
 flash_disk=/dev/"$@"
-kernel_version=3.18.4-armv7-x2
+# USB-port power-supply bug
+#kernel_version=3.18.4-armv7-x2
+kernel_version=3.17.4-armv7-x3
 
 # Setting up path
 PATH="$PATH:/usr/bin:/usr/sbin"
@@ -58,12 +60,12 @@ download_env () {
 	# uncomment me if you want MINIMAL image
 	#curl -L http://file-store.rosalinux.ru/api/v1/file_stores/057042837fd0f47220b04cae27e4cecdf96f6353 -o omv_armvhl_minimal.tar.xz
 	# KDE4.13 image
-	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/a0b1b7fe0f2f39d5a02afb46a1fb1ac3d828f0c8 -o omv_armvhl_minimal.tar.xz
+	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/594605048bffe2a71cc7d62b9aff1f288e6f392a -o omv_armvhl_minimal.tar.xz
 	fi
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/457a2b28a595fa8be60802ee19a861d1ef327047 -o ${kernel_version}.zImage
+	curl -L http://file-store.rosalinux.ru/download/0ab4eca78684e6e4bb984853a40e92cc2efbe8f2 -o ${kernel_version}.zImage
 	fi
 	if [ ! -f u-boot.imx ]
 	then
@@ -71,15 +73,15 @@ download_env () {
 	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/81c33351cdf31314b8a0e5be3829c78cc6df2549  -o ${kernel_version}-modules.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/971166023873486bc257ec994111dd317a58f9cf  -o ${kernel_version}-modules.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-firmware.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/695bec53e1a31ff54a221dc1bc93bee6de29b2d9  -o ${kernel_version}-firmware.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/284688fdfb89a0861e954a998ed8db9d7a03189f  -o ${kernel_version}-firmware.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-dtbs.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/94f849ce4527e448727d075850d69cb6783d02cb  -o ${kernel_version}-dtbs.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/9d70a362c4b74f829b053f01622b31b4edde20a5  -o ${kernel_version}-dtbs.tar.gz
 	fi
 	if [ ! -e brcmfmac4329-sdio.bin ] && [ ! -e brcmfmac4330-sdio.bin ] && [ ! -e brcmfmac4329-sdio.txt ] && [ ! -e brcmfmac4320-sdio.txt ]
 	then

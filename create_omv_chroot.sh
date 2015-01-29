@@ -58,7 +58,7 @@ download_env () {
 	# uncomment me if you want MINIMAL image
 	#curl -L http://file-store.rosalinux.ru/api/v1/file_stores/057042837fd0f47220b04cae27e4cecdf96f6353 -o omv_armvhl_minimal.tar.xz
 	# KDE4.13 image
-	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/057042837fd0f47220b04cae27e4cecdf96f6353 -o omv_armvhl_minimal.tar.xz
+	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/a0b1b7fe0f2f39d5a02afb46a1fb1ac3d828f0c8 -o omv_armvhl_minimal.tar.xz
 	fi
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]

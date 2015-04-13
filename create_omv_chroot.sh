@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 # Disks to check
 #disks="
 #/dev/sda
@@ -15,13 +15,13 @@
 flash_disk=/dev/"$@"
 # USB-port power-supply bug
 #kernel_version=3.18.4-armv7-x2
-kernel_version=3.17.4-armv7-x3
+kernel_version=3.19.2-armv7-x3
 
 # Setting up path
 PATH="$PATH:/usr/bin:/usr/sbin"
 
 clear_disk () {
-	echo "Wipe fisr 10Mb of $flash_disk"
+	echo "Wipe first 10Mb of $flash_disk"
 	sudo dd if=/dev/zero of=$flash_disk bs=1M count=10 > /dev/null 2>&1
 	echo "DONE"
 	}
@@ -37,7 +37,7 @@ burn_uboot () {
 flash_partitions () {                                                                                                                                                                                                     
         echo "Partitioning"                                                                                                                                                                                        
 	sudo sfdisk --in-order --Linux --unit M $flash_disk > /dev/null 2>&1 <<-__EOF__
-	1,,0x83,-
+	1,,0x83,*
 	__EOF__
         echo "DONE"
 	sync
@@ -60,12 +60,12 @@ download_env () {
 	# uncomment me if you want MINIMAL image
 	#curl -L http://file-store.rosalinux.ru/api/v1/file_stores/057042837fd0f47220b04cae27e4cecdf96f6353 -o omv_armvhl_minimal.tar.xz
 	# KDE4.13 image
-	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/594605048bffe2a71cc7d62b9aff1f288e6f392a -o omv_armvhl_minimal.tar.xz
+	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/ef91c739fee59b434dadbcaf4d343d8f9b7fc1a9 -o omv_armvhl_minimal.tar.xz
 	fi
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/0ab4eca78684e6e4bb984853a40e92cc2efbe8f2 -o ${kernel_version}.zImage
+	curl -L http://file-store.rosalinux.ru/download/086c97530ad27d1fc46e8207be4a08450efe57bb -o ${kernel_version}.zImage
 	fi
 	if [ ! -f u-boot.imx ]
 	then
@@ -73,15 +73,15 @@ download_env () {
 	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/971166023873486bc257ec994111dd317a58f9cf  -o ${kernel_version}-modules.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/e3512b3efc3fd71a860a87cf61b3bc14bcaef8d6  -o ${kernel_version}-modules.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-firmware.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/284688fdfb89a0861e954a998ed8db9d7a03189f  -o ${kernel_version}-firmware.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/b4f06fd5bd7680ff039f6e042ff0663d61ab6f0e  -o ${kernel_version}-firmware.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-dtbs.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/9d70a362c4b74f829b053f01622b31b4edde20a5  -o ${kernel_version}-dtbs.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/b428a23ded313e1bb23d463da6028974e66552e5  -o ${kernel_version}-dtbs.tar.gz
 	fi
 	if [ ! -e brcmfmac4329-sdio.bin ] && [ ! -e brcmfmac4330-sdio.bin ] && [ ! -e brcmfmac4329-sdio.txt ] && [ ! -e brcmfmac4320-sdio.txt ]
 	then
@@ -120,7 +120,7 @@ extract_env () {
 	sudo tar -xf ${kernel_version}-modules.tar.gz -C /media/rootfs/
 	sync
 	echo "make root partition writable on the board"
-	sudo sh -c "echo '/dev/mmcblk0p1  /  auto  errors=remount-ro  0  1' >> /media/rootfs/etc/fstab"
+	sudo sh -c "echo '/dev/root  /  auto  errors=remount-ro  0  1' >> /media/rootfs/etc/fstab"
 	echo "Set up WiFi"
 	sudo mkdir -p /media/rootfs/lib/firmware/brcm/
 	sudo cp -v ./brcmfmac43*-sdio.bin /media/rootfs/lib/firmware/brcm/

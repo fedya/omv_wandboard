@@ -14,8 +14,7 @@ set -x
 
 flash_disk=/dev/"$@"
 # USB-port power-supply bug
-#kernel_version=3.18.4-armv7-x2
-kernel_version=3.19.2-armv7-x3
+kernel_version=4.1.6-armv7-x2
 
 # Setting up path
 PATH="$PATH:/usr/bin:/usr/sbin"
@@ -65,7 +64,7 @@ download_env () {
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/086c97530ad27d1fc46e8207be4a08450efe57bb -o ${kernel_version}.zImage
+	curl -L http://file-store.rosalinux.ru/download/8f503d764965184b2a97996b2424af4faf33319c -o ${kernel_version}.zImage
 	fi
 	if [ ! -f u-boot.imx ]
 	then
@@ -73,15 +72,15 @@ download_env () {
 	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/e3512b3efc3fd71a860a87cf61b3bc14bcaef8d6  -o ${kernel_version}-modules.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/935a749a6246d3b37c41303ca7021a2e8f2c879f  -o ${kernel_version}-modules.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-firmware.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/b4f06fd5bd7680ff039f6e042ff0663d61ab6f0e  -o ${kernel_version}-firmware.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/dacc380dddc023f390fece9557f83d654d9b74fe  -o ${kernel_version}-firmware.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-dtbs.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/b428a23ded313e1bb23d463da6028974e66552e5  -o ${kernel_version}-dtbs.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/68b49aa57db64a1f0c50312d556f8210032f051b  -o ${kernel_version}-dtbs.tar.gz
 	fi
 	if [ ! -e brcmfmac4329-sdio.bin ] && [ ! -e brcmfmac4330-sdio.bin ] && [ ! -e brcmfmac4329-sdio.txt ] && [ ! -e brcmfmac4320-sdio.txt ]
 	then

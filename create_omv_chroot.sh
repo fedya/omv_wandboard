@@ -1,20 +1,14 @@
 #!/bin/bash
-set -x
-# Disks to check
-#disks="
-#/dev/sda
-#/dev/sdb"
-
-#disks=$(for dev in $( grep -Hv '^0$' /sys/block/s*/removable | sed 's/removable:.*$/device\/uevent/' | xargs grep -H '^DRIVER=sd' |
-#       sed 's/device.uevent.*$/size/' | xargs grep -Hv '^0$' | cut -d / -f 4;) ;do echo "$dev";done)
-
-# remove me for autodect
-#flash_disk=`grep -Hv '^0$' /sys/block/s*/removable | sed 's/removable:.*$/device\/uevent/' | xargs grep -H '^DRIVER=sd' |
-#        sed 's/device.uevent.*$/size/' | xargs grep -Hv '^0$' | cut -d / -f 4`
-
 flash_disk=/dev/"$@"
-# USB-port power-supply bug
-kernel_version=4.1.6-armv7-x2
+
+kernel_version=4.4.0-armv7-x3.1
+# sha's for kernel stuff
+KERNEL_SHA="5d28fc9c44a23a951bfaf296514cfd62c44e0531"
+UBOOT_SHA="2e99e48894a7d9707331c2e17e612de0c40f9f43"
+MODULES_SHA="c95aba818642ec6c23f3d5e117fb8e2d1e27bebf"
+FIRMWARE_SHA="c741671d063c32b3a6632c88facacf59974c3c57"
+DTBS_SHA="52da987edb2730021ff9ebccfe6f56c1a5377dac"
+OMV_IMAGE_SHA="057042837fd0f47220b04cae27e4cecdf96f6353"
 
 # Setting up path
 PATH="$PATH:/usr/bin:/usr/sbin"
@@ -50,37 +44,36 @@ create_fs () {
 	sync
 	}
 
-# download prebuilt chroot env
 download_env () {
 	sleep 2
 	echo "Prepare minimal system"
 	if [ ! -f omv_armvhl_minimal.tar.xz ]
 	then
 	# uncomment me if you want MINIMAL image
-	#curl -L http://file-store.rosalinux.ru/api/v1/file_stores/057042837fd0f47220b04cae27e4cecdf96f6353 -o omv_armvhl_minimal.tar.xz
+	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/$OMV_IMAGE_SHA -o omv_armvhl_minimal.tar.xz
 	# KDE4.13 image
-	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/ef91c739fee59b434dadbcaf4d343d8f9b7fc1a9 -o omv_armvhl_minimal.tar.xz
+	#curl -L http://file-store.rosalinux.ru/api/v1/file_stores/ef91c739fee59b434dadbcaf4d343d8f9b7fc1a9 -o omv_armvhl_minimal.tar.xz
 	fi
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/8f503d764965184b2a97996b2424af4faf33319c -o ${kernel_version}.zImage
+	curl -L http://file-store.rosalinux.ru/download/$KERNEL_SHA -o ${kernel_version}.zImage
 	fi
 	if [ ! -f u-boot.imx ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/2e99e48894a7d9707331c2e17e612de0c40f9f43 -o u-boot.imx
+	curl -L http://file-store.rosalinux.ru/download/$UBOOT_SHA -o u-boot.imx
 	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/935a749a6246d3b37c41303ca7021a2e8f2c879f  -o ${kernel_version}-modules.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/$MODULES_SHA  -o ${kernel_version}-modules.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-firmware.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/dacc380dddc023f390fece9557f83d654d9b74fe  -o ${kernel_version}-firmware.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/$FIRMWARE_SHA  -o ${kernel_version}-firmware.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-dtbs.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/68b49aa57db64a1f0c50312d556f8210032f051b  -o ${kernel_version}-dtbs.tar.gz
+	curl -L http://file-store.rosalinux.ru/download/$DTBS_SHA  -o ${kernel_version}-dtbs.tar.gz
 	fi
 	if [ ! -e brcmfmac4329-sdio.bin ] && [ ! -e brcmfmac4330-sdio.bin ] && [ ! -e brcmfmac4329-sdio.txt ] && [ ! -e brcmfmac4320-sdio.txt ]
 	then

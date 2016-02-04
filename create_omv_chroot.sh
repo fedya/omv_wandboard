@@ -1,13 +1,13 @@
 #!/bin/bash
 flash_disk=/dev/"$@"
 
-kernel_version=4.4.0-armv7-x3.1
+kernel_version=4.4.1-armv7-x5
 # sha's for kernel stuff
-KERNEL_SHA="5d28fc9c44a23a951bfaf296514cfd62c44e0531"
+KERNEL_SHA="6f35086973465a0056f905a7aed7eb66ce0ca5bb"
 UBOOT_SHA="2e99e48894a7d9707331c2e17e612de0c40f9f43"
-MODULES_SHA="c95aba818642ec6c23f3d5e117fb8e2d1e27bebf"
-FIRMWARE_SHA="c741671d063c32b3a6632c88facacf59974c3c57"
-DTBS_SHA="52da987edb2730021ff9ebccfe6f56c1a5377dac"
+MODULES_SHA="41ab3fc95dfe89fb848cb1d5739cebbadb1e9b8e"
+FIRMWARE_SHA="6f35086973465a0056f905a7aed7eb66ce0ca5bb"
+DTBS_SHA="d37f272a6f758b92241a62202727077d3810fde1"
 OMV_IMAGE_SHA="057042837fd0f47220b04cae27e4cecdf96f6353"
 
 # Setting up path

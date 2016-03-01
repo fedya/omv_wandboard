@@ -10,6 +10,7 @@ MODULES_SHA="00f0c79841b4cd24e538c7af0767ab76557b83af"
 FIRMWARE_SHA="278da9b4bd44b96dd6a891392fddd9a56b7f6e63"
 DTBS_SHA="19fd8fc557b13707b5cf39eeea6a0708f8691a20"
 OMV_IMAGE_SHA="057042837fd0f47220b04cae27e4cecdf96f6353"
+mirror="http://file-store.openmandriva.org/download/"
 
 # Setting up path
 PATH="$PATH:/usr/bin:/usr/sbin"
@@ -59,27 +60,27 @@ download_env () {
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$KERNEL_SHA -o ${kernel_version}.zImage
+	curl -L $mirror/$KERNEL_SHA -o ${kernel_version}.zImage
 	fi
 	if [ ! -f u-boot.imx ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$UBOOT_SHA -o u-boot.img
+	curl -L $mirror/$UBOOT_SHA -o u-boot.img
 	fi
 	if [ ! -f SPL ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$SPL_SHA -o SPL
+	curl -L $mirror/$SPL_SHA -o SPL
 	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$MODULES_SHA  -o ${kernel_version}-modules.tar.gz
+	curl -L $mirror/$MODULES_SHA  -o ${kernel_version}-modules.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-firmware.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$FIRMWARE_SHA  -o ${kernel_version}-firmware.tar.gz
+	curl -L $mirror/$FIRMWARE_SHA  -o ${kernel_version}-firmware.tar.gz
 	fi
 	if [ ! -f ${kernel_version}-dtbs.tar.gz ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$DTBS_SHA  -o ${kernel_version}-dtbs.tar.gz
+	curl -L $mirror/$DTBS_SHA  -o ${kernel_version}-dtbs.tar.gz
 	fi
 	if [ ! -e brcmfmac4329-sdio.bin ] && [ ! -e brcmfmac4330-sdio.bin ] && [ ! -e brcmfmac4329-sdio.txt ] && [ ! -e brcmfmac4320-sdio.txt ]
 	then

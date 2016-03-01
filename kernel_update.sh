@@ -3,7 +3,6 @@
 # root
 
 source ./create_omv_chroot.sh
-mirror="http://file-store.openmandriva.org/download/"
 
 download_env () {
         echo "Prepare kernel stuff (modules, firmwares, etc)"

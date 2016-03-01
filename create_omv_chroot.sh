@@ -1,13 +1,14 @@
 #!/bin/bash
 flash_disk=/dev/"$@"
 
-kernel_version=4.4.1-armv7-x5
+kernel_version=4.4.3-armv7-x5
 # sha's for kernel stuff
-KERNEL_SHA="6f35086973465a0056f905a7aed7eb66ce0ca5bb"
-UBOOT_SHA="2e99e48894a7d9707331c2e17e612de0c40f9f43"
-MODULES_SHA="41ab3fc95dfe89fb848cb1d5739cebbadb1e9b8e"
-FIRMWARE_SHA="6f35086973465a0056f905a7aed7eb66ce0ca5bb"
-DTBS_SHA="d37f272a6f758b92241a62202727077d3810fde1"
+KERNEL_SHA="fd1ddda8edab80663c5bca51697579fc412368b0"
+UBOOT_SHA="3a7ab78fab5bb0f48d6d074f55551a10f1df39b1"
+SPL_SHA="8f40939dfe0c82010fdb81181b5c016e0b552e56"
+MODULES_SHA="00f0c79841b4cd24e538c7af0767ab76557b83af"
+FIRMWARE_SHA="278da9b4bd44b96dd6a891392fddd9a56b7f6e63"
+DTBS_SHA="19fd8fc557b13707b5cf39eeea6a0708f8691a20"
 OMV_IMAGE_SHA="057042837fd0f47220b04cae27e4cecdf96f6353"
 
 # Setting up path
@@ -20,8 +21,9 @@ clear_disk () {
 	}
 
 burn_uboot () {
-	echo "Install u-boot"
-	sudo dd if=u-boot.imx of=$flash_disk seek=1 conv=fsync bs=1k > /dev/null 2>&1
+	echo "Install u-boot/SPL"
+	sudo dd if=SPL of=$flash_disk seek=1 bs=1k > /dev/null 2>&1
+	sudo dd if=u-boot.img of=$flash_disk seek=69 bs=1k > /dev/null 2>&1
 	echo "DONE"
 	sleep 2
 	sync
@@ -61,7 +63,11 @@ download_env () {
 	fi
 	if [ ! -f u-boot.imx ]
 	then
-	curl -L http://file-store.rosalinux.ru/download/$UBOOT_SHA -o u-boot.imx
+	curl -L http://file-store.rosalinux.ru/download/$UBOOT_SHA -o u-boot.img
+	fi
+	if [ ! -f SPL ]
+	then
+	curl -L http://file-store.rosalinux.ru/download/$SPL_SHA -o SPL
 	fi
 	if [ ! -f ${kernel_version}-modules.tar.gz ]
 	then
@@ -91,15 +97,6 @@ extract_env () {
 	sudo bsdtar -xf omv_armvhl_minimal.tar.xz -C /media/rootfs/
 	sync
 	sudo sh -c "echo 'uname_r=${kernel_version}' > /media/rootfs/boot/uEnv.txt"
-	# Wandboard Quad (Original)
-	# sudo sh -c "echo 'dtb=imx6q-wandboard-revb1.dtb' >> /media/rootfs/boot/uEnv.txt"
-	# Wandboard Quad (new C1)
-	echo "set device tree binary"
-	sudo sh -c "echo 'dtb=imx6q-wandboard.dtb' >> /media/rootfs/boot/uEnv.txt"
-	# Wandboard Dual/Solo (Original)
-	# sudo sh -c "echo 'dtb=imx6dl-wandboard-revb1.dtb' >> /media/rootfs/boot/uEnv.txt"
-	# Wandboard Dual/Solo (new C1)
-	# sudo sh -c "echo 'dtb=imx6dl-wandboard.dtb' >> /media/rootfs/boot/uEnv.txt"
 	echo "set video mode"
 	sudo sh -c "echo 'cmdline=video=HDMI-A-1:1024x768@60e' >> /media/rootfs/boot/uEnv.txt"
 	echo "copy kernel image"
@@ -117,6 +114,7 @@ extract_env () {
 	sudo mkdir -p /media/rootfs/lib/firmware/brcm/
 	sudo cp -v ./brcmfmac43*-sdio.bin /media/rootfs/lib/firmware/brcm/
 	sudo cp -v ./brcmfmac43*-sdio.txt /media/rootfs/lib/firmware/brcm/
+	sudo tar -xf ${kernel_version}-firmware.tar.gz /media/rootfs/lib/firmware/
 	echo "unmount $flash_disk"
 	sudo umount /media/rootfs
 	sync

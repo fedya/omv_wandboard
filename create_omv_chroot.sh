@@ -1,14 +1,14 @@
 #!/bin/bash
 flash_disk=/dev/"$@"
 
-kernel_version=4.4.3-armv7-x5
+kernel_version=4.4.6-armv7-x5
 # sha's for kernel stuff
-KERNEL_SHA="fd1ddda8edab80663c5bca51697579fc412368b0"
-UBOOT_SHA="3a7ab78fab5bb0f48d6d074f55551a10f1df39b1"
-SPL_SHA="8f40939dfe0c82010fdb81181b5c016e0b552e56"
-MODULES_SHA="00f0c79841b4cd24e538c7af0767ab76557b83af"
-FIRMWARE_SHA="278da9b4bd44b96dd6a891392fddd9a56b7f6e63"
-DTBS_SHA="19fd8fc557b13707b5cf39eeea6a0708f8691a20"
+KERNEL_SHA="245ba619e97e1cec0f85ca1ee1110313084dfdce"
+UBOOT_SHA="a5ba36ab9a5dfd684e56fbaa7cfd92893b4e334c"
+SPL_SHA="1965c25dfd309da2855f077421b791d23fc91491"
+MODULES_SHA="383b2a63a233d3a26027d1791c4ecf52f41d0696"
+FIRMWARE_SHA="bf2bcb5b37a455c5279d7b1a076557bdec16b0b1"
+DTBS_SHA="af5279c86036b2e4022d45c53fceb3c3e3155c27"
 OMV_IMAGE_SHA="057042837fd0f47220b04cae27e4cecdf96f6353"
 mirror="http://file-store.openmandriva.org/download/"
 

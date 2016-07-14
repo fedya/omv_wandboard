@@ -1,15 +1,16 @@
 #!/bin/bash
 flash_disk=/dev/"$@"
 
-kernel_version=4.4.6-armv7-x5
+kernel_version=4.6.3-armv7-x4
 # sha's for kernel stuff
-KERNEL_SHA="245ba619e97e1cec0f85ca1ee1110313084dfdce"
-UBOOT_SHA="a5ba36ab9a5dfd684e56fbaa7cfd92893b4e334c"
-SPL_SHA="1965c25dfd309da2855f077421b791d23fc91491"
-MODULES_SHA="383b2a63a233d3a26027d1791c4ecf52f41d0696"
-FIRMWARE_SHA="bf2bcb5b37a455c5279d7b1a076557bdec16b0b1"
-DTBS_SHA="af5279c86036b2e4022d45c53fceb3c3e3155c27"
-OMV_IMAGE_SHA="057042837fd0f47220b04cae27e4cecdf96f6353"
+KERNEL_SHA="8956bda99e119a98bb98d0d415ce2eb76aa9230c"
+UBOOT_SHA="74a247bf8b33f32d202d8ffe0c2e9e4062926974"
+SPL_SHA="a8fae23f36b093cc46dae6be44a2316099e66478"
+MODULES_SHA="fbdebba23ea5a475e0c1ac508e10e032672c8ead"
+FIRMWARE_SHA="36aaad4d805217d8b657b87b8d0839c944911488"
+DTBS_SHA="6b7123ff110eac59aab403163f8dc3eb25c03485"
+
+OMV_IMAGE_SHA="cfeadcd9c5f5700aa5d78ed5a2b26b6580ccb12b"
 mirror="http://file-store.openmandriva.org/download/"
 
 # Setting up path

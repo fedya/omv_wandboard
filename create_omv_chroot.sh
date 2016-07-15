@@ -10,7 +10,7 @@ MODULES_SHA="fbdebba23ea5a475e0c1ac508e10e032672c8ead"
 FIRMWARE_SHA="36aaad4d805217d8b657b87b8d0839c944911488"
 DTBS_SHA="6b7123ff110eac59aab403163f8dc3eb25c03485"
 # 3.0 image
-OMV_IMAGE_SHA="cfeadcd9c5f5700aa5d78ed5a2b26b6580ccb12b"
+OMV_IMAGE_SHA="8750927d0ab911189c16535d71cfabbd670a13fe"
 mirror="http://file-store.openmandriva.org/download/"
 
 # Setting up path

@@ -9,7 +9,7 @@ SPL_SHA="a8fae23f36b093cc46dae6be44a2316099e66478"
 MODULES_SHA="fbdebba23ea5a475e0c1ac508e10e032672c8ead"
 FIRMWARE_SHA="36aaad4d805217d8b657b87b8d0839c944911488"
 DTBS_SHA="6b7123ff110eac59aab403163f8dc3eb25c03485"
-
+# 3.0 image
 OMV_IMAGE_SHA="cfeadcd9c5f5700aa5d78ed5a2b26b6580ccb12b"
 mirror="http://file-store.openmandriva.org/download/"
 
@@ -53,10 +53,7 @@ download_env () {
 	echo "Prepare minimal system"
 	if [ ! -f omv_armvhl_minimal.tar.xz ]
 	then
-	# uncomment me if you want MINIMAL image
-	curl -L http://file-store.rosalinux.ru/api/v1/file_stores/$OMV_IMAGE_SHA -o omv_armvhl_minimal.tar.xz
-	# KDE4.13 image
-	#curl -L http://file-store.rosalinux.ru/api/v1/file_stores/ef91c739fee59b434dadbcaf4d343d8f9b7fc1a9 -o omv_armvhl_minimal.tar.xz
+	curl -L $mirror/$OMV_IMAGE_SHA -o omv_armvhl_minimal.tar.xz
 	fi
 	echo "Prepare kernel stuff (modules, firmwares, etc)"
 	if [ ! -f ${kernel_version}.zImage ]

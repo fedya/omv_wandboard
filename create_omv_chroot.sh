@@ -96,7 +96,7 @@ download_env () {
 extract_env () {
 	sudo mkdir -p /media/rootfs/
 	sudo mount $flash_disk"1" /media/rootfs/
-	sudo bsdtar -xf omv_armvhl_minimal.tar.xz -C /media/rootfs/
+	sudo tar -xf omv_armvhl_minimal.tar.xz -C /media/rootfs/
 	sync
 	sudo sh -c "echo 'uname_r=${kernel_version}' > /media/rootfs/boot/uEnv.txt"
 	echo "set video mode"
@@ -116,7 +116,7 @@ extract_env () {
 	sudo mkdir -p /media/rootfs/lib/firmware/brcm/
 	sudo cp -v ./brcmfmac43*-sdio.bin /media/rootfs/lib/firmware/brcm/
 	sudo cp -v ./brcmfmac43*-sdio.txt /media/rootfs/lib/firmware/brcm/
-	sudo tar -xf ${kernel_version}-firmware.tar.gz /media/rootfs/lib/firmware/
+	sudo tar -xf ${kernel_version}-firmware.tar.gz -C /media/rootfs/lib/firmware/
 	echo "unmount $flash_disk"
 	sudo umount /media/rootfs
 	sync
